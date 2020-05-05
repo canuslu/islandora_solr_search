@@ -319,7 +319,11 @@ function islandora_solr_prepare_solr_results($solr_results) {
     $pid = $object_result['PID'];
     $rows = array();
     $options = array('html' => TRUE);
-    $title_info = implode(", ", $object_result['solr_doc']['mods_titleInfo_title_all_mt']);
+    if (array_key_exists('mods_titleInfo_title_al_mt', $solr_doc)) {
+      $title_info = implode(', ', $solr_doc['mods_titleInfo_title_all_mt']);
+    } else {
+      $title_info = $object_result['object_label'];
+    }
     if (isset($object_result['object_label'])) {
       $options['attributes']['title'] = t($title_info);
     }
@@ -369,7 +373,6 @@ function islandora_solr_prepare_solr_results($solr_results) {
             $value = array($open_tag . t($value_raw) . $close_tag);
         }
       }
-      $value = array(t(implode(", ", $value)));
       // Replace PID with Object Label.
       if (in_array($field, $replace_pid_with_label)) {
         $query_processor = new IslandoraSolrQueryProcessor();

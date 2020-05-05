@@ -70,8 +70,16 @@ function template_preprocess_islandora_solr(&$variables) {
     $image_params = array(
       'path' => $path,
     );
-    preg_match_all('/<a .*?>(.*?)<\/a>/', $result['solr_doc']['mods_titleInfo_title_all_mt']['value'], $matches);
-    $title_info = $matches[1][0];
+    if (array_key_exists('mods_titleInfo_title_all_mt', $result['solr_doc'])) {
+      preg_match_all('/<a .*?>(.*?)<\/a>/', $result['solr_doc']['mods_titleInfo_title_all_mt']['value'], $matches);
+      if (isset($matches[1][0])) {
+        $title_info = $matches[1][0];
+      } else {
+        $title_info = $result['object_label'];
+      }
+    } else {
+      $title_info = $result['object_label'];
+    }
     if (isset($result['object_label'])) {
       $image_params['alt'] = t($title_info);
     }
