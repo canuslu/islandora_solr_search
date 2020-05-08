@@ -469,7 +469,7 @@ function islandora_solr_simple_search_form($form, &$form_state) {
     $title_visible = 'before';
   }
 
-  $title_label = variable_get('islandora_solr_simple_search_label_title', 'Search Term');
+  $title_label = "";
 
   $form['simple']["simple_holder"] = array(
     '#type' => 'container',
@@ -499,7 +499,7 @@ function islandora_solr_simple_search_form($form, &$form_state) {
     )
   );
 
-  $form['simple']["islandora_simple_search_query"] = array(
+  $form['simple']['simple_holder']['input_div']['islandora_simple_search_query'] = array(
     '#prefix' => '<a href="#" class="on-screen-keyboard-trigger" onclick="keyboardTrigger($(this));"><i class="fas fa-keyboard"></i></a><a href="#" class="search-help-trigger" data-toggle="modal" data-target="#search-help"><i class="fas fa-question-circle"></i></a>',
     '#size' => '15',
     '#type' => 'textfield',
